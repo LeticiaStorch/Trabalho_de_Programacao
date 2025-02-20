@@ -1,13 +1,29 @@
 #include <stdio.h>
+#include <string.h>
 
 int MenuIncial();
+char* BuscarPalavra(char NomeArquivo[]);
+int sorteiaPalavra();
 
 int main()
 {
     int opcao;
-   opcao = MenuIncial();
-   if(opcao == 1)
+    char palavras[1000];
+
+    do 
+    {
+        opcao = MenuIncial();
+
+        if (opcao < 1 || opcao > 5) 
+        {
+            printf("\n\n       Opcao invalida tente novamente =3\n");
+        }
+    } while (opcao < 1 || opcao > 5);
+
+
+    if(opcao == 1)
    {
+   // strcpy(palavras,);
     printf("Animais\n");
    }
    else if(opcao == 2)
@@ -22,16 +38,19 @@ int main()
    {
     printf("profison\n");
    }
-   else
+   else if(opcao == 5)
    {
-    printf("\n Opcao invalida tente novamente =3 ");
+    printf("frutas\n");
    }
+  
+
     return 0;
 }
 
 int MenuIncial()
 {
     int opcao;
+    
     printf("\n ---------------------   Menu   --------------------- ");
     printf("\n|                                                    |");
     printf("\n|       Escolha uma opcao para jogar:                |");
@@ -40,10 +59,15 @@ int MenuIncial()
     printf("\n|       2 - Países                                   |");
     printf("\n|       3 - Series                                   |");
     printf("\n|       4 - Profissoes                               |");
+    printf("\n|       5 - Frutas                                   |");
     printf("\n|                                                    |");
     printf("\n ----------------------------------------------------\n\n");
     printf("Qual opcao: ");
     scanf("%d", &opcao);
-
     return opcao;
+}
+
+char* BuscarPalavra(char NomeArquivo[])
+{
+
 }
