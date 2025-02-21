@@ -1,14 +1,22 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <time.h>
+
+#define MAX_PALAVRA 100
+//#define MAX_TAMANHO 100
 
 int MenuIncial();
-char* BuscarPalavra(char NomeArquivo[]);
+void BuscarPalavra(char NomeArquivo[],int faixa, char Spalavra[MAX_PALAVRA]);
 int sorteiaPalavra();
+int qntPalavras(char NomeArquivo[]);
 
 int main()
 {
     int opcao;
-    char palavras[1000];
+    char Spalavra[MAX_PALAVRA];
+    char NomeArq[MAX_PALAVRA];
+    int qnt;
 
     do 
     {
@@ -23,24 +31,28 @@ int main()
 
     if(opcao == 1)
    {
-   // strcpy(palavras,);
-    printf("Animais\n");
+    strcpy(NomeArq, "Animais.txt");
+    printf("%s\n", NomeArq);
    }
    else if(opcao == 2)
    {
-    printf("pais\n");
+    strcpy(NomeArq, "paises.txt");
+    printf("%s\n", NomeArq);
    }
    else if(opcao == 3)
    {
-    printf("series\n");
+    strcpy(NomeArq, "series.txt");
+    printf("%s\n", NomeArq);
    }
    else if(opcao == 4)
    {
-    printf("profison\n");
+    strcpy(NomeArq, "profissoes.txt");
+    printf("%s\n", NomeArq);
    }
    else if(opcao == 5)
    {
-    printf("frutas\n");
+    strcpy(NomeArq, "frutas.txt");
+    printf("%s\n", NomeArq);
    }
   
 
@@ -67,7 +79,45 @@ int MenuIncial()
     return opcao;
 }
 
-char* BuscarPalavra(char NomeArquivo[])
+void BuscarPalavra(char NomeArquivo[], int faixa, char Spalavra[MAX_PALAVRA])
 {
+    FILE * fListas = fopen(NomeArquivo, "r");
+    if(fListas == NULL)
+    {
+        printf("Arquivo nao encontrado\n");
+        exit(1);
+    }
+    
+    for(int i = 0; i <= sorteiaPalavra(faixa); i++)
+    {
+        fscanf(fListas," %[^\n]\n", Spalavra);
+    }
+
+    fclose(fListas);
 
 }
+
+int sorteiaPalavra(int faixa)
+{
+    srand((unsigned) time(NULL)); //srand eh um gerador de numeros aleatorios, unsigned armazena apenas valores positivos maiores ou igual a zero e time(NULL) retorna o tempo atual 
+    return rand() % faixa; //retorna rand(), que eh um numero aleatorio, % faixa faz com que o valor esteja dentro do intervalo
+}
+
+int qntPalavras(char NomeArquivo[])
+{
+    char temp[MAX_PALAVRA];
+    int qnt=0;
+    FILE * fListas = fopen(NomeArquivo, "r");
+    if(fListas == NULL)
+    {
+        printf("Arquivo nao encontrado\n");
+        exit(1);
+    }
+    while (fscanf(fListas," %[^\n]\n", temp) != EOF)
+    {
+        qnt++;
+    }
+    fclose(fListas);
+    return qnt;
+}
+

@@ -1,27 +1,27 @@
-Afeganistão
-Alemanha
-Argentina
-Austrália
-Bélgica
-Brasil
-Canadá
-Chile
-Coreia do sul
-Colômbia
-Dinamarca
-Egito
-Emirados Árabes Unidos
-Espanha
-Estados Unidos
-França
-Grécia
-Índia
-Indonésia
-Itália
-Japão
-México
-Noruega
-Portugal
-Reino Unido
-Rússia
-Suécia
+afeganistão
+alemanha
+argentina
+austrália
+bélgica
+brasil
+canadá
+chile
+coreia do sul
+colômbia
+dinamarca
+egito
+emirados Árabes Unidos
+espanha
+estados Unidos
+frança
+grécia
+india
+indonésia
+itália
+japão
+méxico
+noruega
+portugal
+reino Unido
+rússia
+suécia
