@@ -23,5 +23,6 @@ coiote
 coruja
 corvo
 crocodilo
+leao
 panda
 peixe

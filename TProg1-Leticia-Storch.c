@@ -8,8 +8,12 @@
 
 int MenuIncial();
 void BuscarPalavra(char NomeArquivo[],int faixa, char Spalavra[MAX_PALAVRA]);
-int sorteiaPalavra();
+int sorteiaPalavra(int faixa);
 int qntPalavras(char NomeArquivo[]);
+int ExecutaJogo();
+void VerificaChances(int contador);
+void MensagemVitoria();
+void DesenhaForca(int contador, int flag);
 
 int main()
 {
@@ -32,30 +36,29 @@ int main()
     if(opcao == 1)
    {
     strcpy(NomeArq, "Animais.txt");
-    printf("%s\n", NomeArq);
    }
    else if(opcao == 2)
    {
     strcpy(NomeArq, "paises.txt");
-    printf("%s\n", NomeArq);
    }
    else if(opcao == 3)
    {
     strcpy(NomeArq, "series.txt");
-    printf("%s\n", NomeArq);
    }
    else if(opcao == 4)
    {
     strcpy(NomeArq, "profissoes.txt");
-    printf("%s\n", NomeArq);
    }
    else if(opcao == 5)
    {
     strcpy(NomeArq, "frutas.txt");
-    printf("%s\n", NomeArq);
    }
-  
 
+   qnt = qntPalavras(NomeArq);    // testando a palavra sorteada
+   BuscarPalavra(NomeArq, qnt, Spalavra);
+
+   //printf("PALAVRA SORTEADA: %s\n", Spalavra); 
+   
     return 0;
 }
 
@@ -121,3 +124,64 @@ int qntPalavras(char NomeArquivo[])
     return qnt;
 }
 
+void VerificaChances(int contador)
+{
+
+    switch(contador)
+    {
+        case 1:
+        printf("\nVoce pode errar mais 5 vezes\n");
+        break;
+        case 2:
+        printf("\nVoce pode errar mais 4 vezes\n");
+        break;
+        case 3:
+        printf("\nvoce pode errar mais 3 vezes\n");
+        break;
+        case 4:
+        printf("\nVoce pode errar mais 2 vezes\n");
+        break;
+        case 5:
+        printf("\nNem tudo esta perdido, mas ta quase! so mais uma chance\n");
+        break;
+    }
+}
+
+void MensagemVitoria()
+
+{
+    printf("************************************************\n");
+    printf("**           IEEEEEEEEEEEEEEEE                **\n");
+    printf("**                                            **\n");
+    printf("**               PARABENS!                    **\n");
+    printf("**                                            **\n");
+    printf("**                 VOCE                       **\n");
+    printf("**                                            **\n");
+    printf("**            VENCEU O JOGO                   **\n");
+    printf("************************************************\n");
+
+}
+
+void DesenhaForca(int contador, int flag)
+{
+    if(flag == 0)
+    {
+        /*switch(contador)             DEPOIS PENSO
+        case 1:
+        printf(" ________");
+        printf("|        |");
+        printf("|");
+        printf("|");
+        printf("|");
+        printf("|");
+        break;
+        case 2:
+        printf(" ________");
+        printf("|        |");
+        printf("|       X X");
+        printf("|");
+        printf("|");
+        printf("|");
+        */
+    }
+}
