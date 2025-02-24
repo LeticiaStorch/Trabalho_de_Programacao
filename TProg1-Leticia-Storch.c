@@ -6,7 +6,7 @@
 #define MAX_PALAVRA 100
 //#define MAX_TAMANHO 100
 
-int MenuIncial();
+int MenuIncial(char NomeArq[]);
 void BuscarPalavra(char NomeArquivo[],int faixa, char Spalavra[MAX_PALAVRA]);
 int sorteiaPalavra(int faixa);
 int qntPalavras(char NomeArquivo[]);
@@ -20,49 +20,22 @@ int main()
     int opcao;
     char Spalavra[MAX_PALAVRA];
     char NomeArq[MAX_PALAVRA];
-    int qnt;
+    int qnt, jogo;
 
-    do 
-    {
-        opcao = MenuIncial();
+    opcao = MenuIncial(NomeArq);
 
-        if (opcao < 1 || opcao > 5) 
-        {
-            printf("\n\n       Opcao invalida tente novamente =3\n");
-        }
-    } while (opcao < 1 || opcao > 5);
-
-
-    if(opcao == 1)
-   {
-    strcpy(NomeArq, "Animais.txt");
-   }
-   else if(opcao == 2)
-   {
-    strcpy(NomeArq, "paises.txt");
-   }
-   else if(opcao == 3)
-   {
-    strcpy(NomeArq, "series.txt");
-   }
-   else if(opcao == 4)
-   {
-    strcpy(NomeArq, "profissoes.txt");
-   }
-   else if(opcao == 5)
-   {
-    strcpy(NomeArq, "frutas.txt");
-   }
-
-   qnt = qntPalavras(NomeArq);    // testando a palavra sorteada
+    qnt = qntPalavras(NomeArq);    // testando a palavra sorteada
    BuscarPalavra(NomeArq, qnt, Spalavra);
 
-   //printf("PALAVRA SORTEADA: %s\n", Spalavra); 
+   printf("PALAVRA SORTEADA: %s\n", Spalavra); 
+
+   //DesenhaForca(5,0);
+   jogo = ExecutaJogo(Spalavra);
    
     return 0;
 }
 
-int MenuIncial()
+int MenuIncial(char NomeArq[])
 {
     int opcao;
     
@@ -79,7 +52,45 @@ int MenuIncial()
     printf("\n ----------------------------------------------------\n\n");
     printf("Qual opcao: ");
     scanf("%d", &opcao);
-    return opcao;
+
+    do 
+    {
+    
+    if (opcao < 1 || opcao > 5) 
+    {
+        printf("\n\n       Opcao invalida tente novamente =3\n");
+    }
+    } while (opcao < 1 || opcao > 5);
+
+    
+    if(opcao == 1)
+   {
+    strcpy(NomeArq, "Animais.txt");
+    printf("A opcao escolida foi animais\n");
+   }
+   else if(opcao == 2)
+   {
+    strcpy(NomeArq, "paises.txt");
+    printf("A opcao escolida foi paises\n");
+   }
+   else if(opcao == 3)
+   {
+    strcpy(NomeArq, "series.txt");
+    printf("A opcao escolida foi series\n");
+   }
+   else if(opcao == 4)
+   {
+    strcpy(NomeArq, "profissoes.txt");
+    printf("A opcao escolida foi profissoes\n");
+   }
+   else if(opcao == 5)
+   {
+    strcpy(NomeArq, "frutas.txt");
+    printf("A opcao escolida foi frutas\n");
+   }
+   
+   return opcao;
+
 }
 
 void BuscarPalavra(char NomeArquivo[], int faixa, char Spalavra[MAX_PALAVRA])
@@ -157,31 +168,92 @@ void MensagemVitoria()
     printf("**                                            **\n");
     printf("**                 VOCE                       **\n");
     printf("**                                            **\n");
-    printf("**            VENCEU O JOGO                   **\n");
+    printf("**           b VENCEU O JOGO                  **\n");
     printf("************************************************\n");
 
 }
 
-void DesenhaForca(int contador, int flag)
+void DesenhaForca(int flag, int contador)
 {
     if(flag == 0)
     {
-        /*switch(contador)             DEPOIS PENSO
+        switch(contador)
+        {           
         case 1:
-        printf(" ________");
-        printf("|        |");
-        printf("|");
-        printf("|");
-        printf("|");
-        printf("|");
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|\n");
+        printf("|\n");
+        printf("|\n");
+        printf("|\n");
         break;
         case 2:
-        printf(" ________");
-        printf("|        |");
-        printf("|       X X");
-        printf("|");
-        printf("|");
-        printf("|");
-        */
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|       X X\n");
+        printf("|\n");
+        printf("|\n");
+        printf("|\n");
+        break;
+        case 3:
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|       X X\n");
+        printf("|        |\n");
+        printf("|\n");
+        printf("|\n");
+        break;
+        case 4:
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|       X X\n");
+        printf("|       /| \n");
+        printf("|\n");
+        printf("|\n");
+        break;
+        case 5:
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|       X X\n");
+        printf("|       /|\\ \n");
+        printf("|\n");
+        printf("|\n");
+        break;
+        case 6:
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|       X X\n");
+        printf("|       /|\\ \n");
+        printf("|       /\n");
+        printf("|\n");
+        break;
+        case 7:
+        printf(" ________\n");
+        printf("|        |\n");
+        printf("|       X X\n");
+        printf("|       /|\\ \n");
+        printf("|       / \\\n");
+        printf("|\n");
+        break;
+        }
+        
     }
+
+}
+
+int ExecutaJogo(char Spalavra[])
+{
+    int flag=0, i;
+    int l = strlen(Spalavra);
+    char Pdigitada[l+1];
+
+    DesenhaForca(flag, 1);
+    for(i = 0; i < l; i++)
+    {
+        Pdigitada[i] = '_';
+    }
+    Pdigitada[l] = '\0';
+    printf("\nPALAVRA:%s", Pdigitada);
+    printf("\n");
+
 }

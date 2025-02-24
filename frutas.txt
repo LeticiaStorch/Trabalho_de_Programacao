@@ -1,6 +1,6 @@
 abacaxi
 abacate
-açaí
+acaí
 acerola
 ameixa
 amora
@@ -8,7 +8,7 @@ banana
 caju
 cereja
 coco
-cupuaçu
+cupuacu
 damasco
 figo
 framboesa
@@ -18,10 +18,10 @@ jabuticaba
 jaca
 kiwi
 laranja
-limão
-maçã
-mamão
+limao
+maca
+mamao
 manga
-maracujá
+maracuja
 melancia
 morango

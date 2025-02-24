@@ -3,7 +3,7 @@ alce
 andorinha
 anta
 aranha
-ave-lira
+ave lira
 avestruz
 baleia
 boi 

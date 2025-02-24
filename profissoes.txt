@@ -1,27 +1,27 @@
-médico
+medico
 engenheiro
 professor
 advogado
 arquiteto
 programador
-designer gráfico
+designer grafico
 jornalista
-psicólogo
+psicologo
 dentista
 enfermeiro
-farmacêutico
+farmaceutico
 fisioterapeuta
 contador
 economista
 cientista de dados
-piloto de avião
-astrônomo
+piloto de aviao
+astronomo
 chefe de cozinha
-mecânico
+mecanico
 policial
 bombeiro
 eletricista
 motorista
-publicitário
-fotógrafo
-veterinário
+publicitario
+fotografo
+veterinario
