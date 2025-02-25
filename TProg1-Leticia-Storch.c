@@ -24,12 +24,10 @@ int main()
 
     opcao = MenuIncial(NomeArq);
 
-    qnt = qntPalavras(NomeArq);    // testando a palavra sorteada
+    qnt = qntPalavras(NomeArq);    // palavra sorteada
    BuscarPalavra(NomeArq, qnt, Spalavra);
 
-   printf("PALAVRA SORTEADA: %s\n", Spalavra); 
-
-   //DesenhaForca(5,0);
+  // printf("PALAVRA SORTEADA: %s\n", Spalavra); 
    jogo = ExecutaJogo(Spalavra);
    
     return 0;
