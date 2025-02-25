@@ -6,7 +6,7 @@ aranha
 ave lira
 avestruz
 baleia
-boi 
+boi
 borboleta
 cabra
 camelo

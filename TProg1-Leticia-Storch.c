@@ -13,7 +13,7 @@ int qntPalavras(char NomeArquivo[]);
 int ExecutaJogo();
 void VerificaChances(int contador);
 void MensagemVitoria();
-void DesenhaForca(int contador, int flag);
+void DesenhaForca(int contador);
 
 int main()
 {
@@ -66,27 +66,27 @@ int MenuIncial(char NomeArq[])
     if(opcao == 1)
    {
     strcpy(NomeArq, "Animais.txt");
-    printf("A opcao escolida foi animais\n");
+    printf("\nA opcao escolida foi animais\n");
    }
    else if(opcao == 2)
    {
     strcpy(NomeArq, "paises.txt");
-    printf("A opcao escolida foi paises\n");
+    printf("\nA opcao escolida foi paises\n");
    }
    else if(opcao == 3)
    {
     strcpy(NomeArq, "series.txt");
-    printf("A opcao escolida foi series\n");
+    printf("\nA opcao escolida foi series\n");
    }
    else if(opcao == 4)
    {
     strcpy(NomeArq, "profissoes.txt");
-    printf("A opcao escolida foi profissoes\n");
+    printf("\nA opcao escolida foi profissoes\n");
    }
    else if(opcao == 5)
    {
     strcpy(NomeArq, "frutas.txt");
-    printf("A opcao escolida foi frutas\n");
+    printf("\nA opcao escolida foi frutas\n");
    }
    
    return opcao;
@@ -104,7 +104,7 @@ void BuscarPalavra(char NomeArquivo[], int faixa, char Spalavra[MAX_PALAVRA])
     
     for(int i = 0; i <= sorteiaPalavra(faixa); i++)
     {
-        fscanf(fListas," %[^\n]\n", Spalavra);
+        fscanf(fListas,"%[^\n]\n", Spalavra);
     }
 
     fclose(fListas);
@@ -127,7 +127,7 @@ int qntPalavras(char NomeArquivo[])
         printf("Arquivo nao encontrado\n");
         exit(1);
     }
-    while (fscanf(fListas," %[^\n]\n", temp) != EOF)
+    while (fscanf(fListas,"%[^\n]\n", temp) != EOF)
     {
         qnt++;
     }
@@ -141,7 +141,7 @@ void VerificaChances(int contador)
     switch(contador)
     {
         case 1:
-        printf("\nVoce pode errar mais 5 vezes\n");
+        printf("\nVoce pode errar apenas 5 vezes\n");
         break;
         case 2:
         printf("\nVoce pode errar mais 4 vezes\n");
@@ -153,7 +153,10 @@ void VerificaChances(int contador)
         printf("\nVoce pode errar mais 2 vezes\n");
         break;
         case 5:
-        printf("\nNem tudo esta perdido, mas ta quase! so mais uma chance\n");
+        printf("\nNem tudo esta perdido, mas ta quase!\n");
+        break;
+        case 6:
+        printf("\nUltima(s) chance(s)...\n");
         break;
     }
 }
@@ -161,22 +164,20 @@ void VerificaChances(int contador)
 void MensagemVitoria()
 
 {
-    printf("************************************************\n");
+    printf("\n************************************************\n");
     printf("**           IEEEEEEEEEEEEEEEE                **\n");
     printf("**                                            **\n");
     printf("**               PARABENS!                    **\n");
     printf("**                                            **\n");
     printf("**                 VOCE                       **\n");
     printf("**                                            **\n");
-    printf("**           b VENCEU O JOGO                  **\n");
+    printf("**             VENCEU O JOGO                  **\n");
     printf("************************************************\n");
 
 }
 
-void DesenhaForca(int flag, int contador)
+void DesenhaForca(int contador)
 {
-    if(flag == 0)
-    {
         switch(contador)
         {           
         case 1:
@@ -236,24 +237,92 @@ void DesenhaForca(int flag, int contador)
         printf("|\n");
         break;
         }
-        
-    }
 
 }
 
 int ExecutaJogo(char Spalavra[])
 {
-    int flag=0, i;
+    int i;
+    int  erros=0, acertos = 0, rept = 0;
     int l = strlen(Spalavra);
     char Pdigitada[l+1];
+    char letra;
+    char Ldigitadas[26];
+    int qntDig = 0;
 
-    DesenhaForca(flag, 1);
-    for(i = 0; i < l; i++)
+    DesenhaForca(1);
+    for(i = 0; i < l+1; i++)
     {
+        if(Spalavra[i] == ' ')
+        {
+            Pdigitada[i] = ' ';
+        } else if(Spalavra[i] == '\n')
+        {
+            Pdigitada[i] = '\n';
+        }
+        else
         Pdigitada[i] = '_';
+
     }
-    Pdigitada[l] = '\0';
-    printf("\nPALAVRA:%s", Pdigitada);
+    Pdigitada[l-1] = '\0';
+    
+    printf("\nPALAVRA: %s", Pdigitada);
     printf("\n");
+    VerificaChances(1);
+    
+    while(erros < 6)
+    {
+        int enct = 0;
+
+       /* printf("\nLetras digitadas: ");
+        for(i=0; i < qntDig; i++)
+        {
+            printf("%c ", Ldigitadas[i]);
+        }*/
+
+        printf("\nDigite uma letra: ");
+        scanf(" %c", &letra);
+
+      /* for(i = 0; i < qntDig; i++) // MEXER NESSA PARTE
+        {
+            if(Ldigitadas[i] == letra)
+            {
+                rept = 1;
+                break;
+            }
+           
+        }
+        if(rept) continue;
+
+        Ldigitadas[qntDig++] = letra;*/
+
+    for(i = 0; i < l+1; i++)
+    {
+        if(Spalavra[i] == letra && Pdigitada[i] == '_')
+        {
+            Pdigitada[i] = letra;
+            acertos++;
+            enct = 1;
+        }
+        
+    }
+    if(!enct)
+    {
+        erros++;
+    }
+
+    DesenhaForca(erros+1);
+    printf("\nPALAVRA: %s\n", Pdigitada);
+    VerificaChances(erros+1);
+
+    if(acertos == l-1)
+    {
+        MensagemVitoria();
+        return 1;
+    }
+}
+    printf("\nVocê perdeu! A palavra era: %s\n", Spalavra);
+   
+    return 0;
 
 }
