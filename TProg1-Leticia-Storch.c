@@ -4,13 +4,12 @@
 #include <time.h>
 
 #define MAX_PALAVRA 100
-//#define MAX_TAMANHO 100
 
 int MenuIncial(char NomeArq[]);
 void BuscarPalavra(char NomeArquivo[],int faixa, char Spalavra[MAX_PALAVRA]);
 int sorteiaPalavra(int faixa);
 int qntPalavras(char NomeArquivo[]);
-int ExecutaJogo();
+int ExecutaJogo(char Spalavra[]);
 void VerificaChances(int contador);
 void MensagemVitoria();
 void DesenhaForca(int contador);
@@ -27,7 +26,6 @@ int main()
     qnt = qntPalavras(NomeArq);    // palavra sorteada
    BuscarPalavra(NomeArq, qnt, Spalavra);
 
-  // printf("PALAVRA SORTEADA: %s\n", Spalavra); 
    jogo = ExecutaJogo(Spalavra);
    
     return 0;
@@ -37,6 +35,8 @@ int MenuIncial(char NomeArq[])
 {
     int opcao;
     
+    do 
+    {
     printf("\n ---------------------   Menu   --------------------- ");
     printf("\n|                                                    |");
     printf("\n|       Escolha uma opcao para jogar:                |");
@@ -51,9 +51,6 @@ int MenuIncial(char NomeArq[])
     printf("Qual opcao: ");
     scanf("%d", &opcao);
 
-    do 
-    {
-    
     if (opcao < 1 || opcao > 5) 
     {
         printf("\n\n       Opcao invalida tente novamente =3\n");
@@ -138,6 +135,9 @@ void VerificaChances(int contador)
 
     switch(contador)
     {
+        case 0:
+        printf("\n");
+        break;
         case 1:
         printf("\nVoce pode errar apenas 5 vezes\n");
         break;
@@ -179,7 +179,7 @@ void DesenhaForca(int contador)
         switch(contador)
         {           
         case 1:
-        printf(" ________\n");
+        printf("\n ________\n");
         printf("|        |\n");
         printf("|\n");
         printf("|\n");
@@ -241,7 +241,7 @@ void DesenhaForca(int contador)
 int ExecutaJogo(char Spalavra[])
 {
     int i;
-    int  erros=0, acertos = 0, rept = 0;
+    int  erros=0, acertos = 0;
     int l = strlen(Spalavra);
     char Pdigitada[l+1];
     char letra;
@@ -271,17 +271,18 @@ int ExecutaJogo(char Spalavra[])
     while(erros < 6)
     {
         int enct = 0;
+        int rept = 0;
 
-       /* printf("\nLetras digitadas: ");
+       printf("\nLetras digitadas: ");
         for(i=0; i < qntDig; i++)
         {
             printf("%c ", Ldigitadas[i]);
-        }*/
+        }
 
         printf("\nDigite uma letra: ");
         scanf(" %c", &letra);
 
-      /* for(i = 0; i < qntDig; i++) // MEXER NESSA PARTE
+       for(i = 0; i < qntDig; i++) // MEXER NESSA PARTE
         {
             if(Ldigitadas[i] == letra)
             {
@@ -290,16 +291,23 @@ int ExecutaJogo(char Spalavra[])
             }
            
         }
-        if(rept) continue;
+        if(rept)
+        {
+            printf("\nVoce ja digitou essa letra antes!...\n");
+            DesenhaForca(erros+1);
+            printf("\nPALAVRA: %s\n", Pdigitada);
+            VerificaChances(erros+1);
+            continue;
+        }
 
-        Ldigitadas[qntDig++] = letra;*/
+        Ldigitadas[qntDig++] = letra;
 
     for(i = 0; i < l+1; i++)
     {
         if(Spalavra[i] == letra && Pdigitada[i] == '_')
         {
             Pdigitada[i] = letra;
-            acertos++;
+           // acertos++;
             enct = 1;
         }
         
@@ -313,7 +321,8 @@ int ExecutaJogo(char Spalavra[])
     printf("\nPALAVRA: %s\n", Pdigitada);
     VerificaChances(erros+1);
 
-    if(acertos == l-1)
+    //if(acertos == l-1) AQUI
+    if(strncmp(Pdigitada, Spalavra, l-1) == 0)
     {
         MensagemVitoria();
         return 1;
