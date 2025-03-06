@@ -31,6 +31,9 @@ void MensagemVitoria();
 //funcao que desenha a forca conforme os erros do jogador
 void DesenhaForca(int contador);
 
+//funcao para receber e avaliar o chute de uma palavra inteira na ultima tentativa do jogador
+void DpalavraSec(char Spalavra[], int l);
+
 int main()
 {
     int opcao;
@@ -38,7 +41,7 @@ int main()
     char NomeArq[MAX_PALAVRA];
     int qnt, jogo;
 
-    // Exibe o menu e recebe a opcao do jogador
+    // exibe o menu e recebe a opcao do jogador
     opcao = MenuIncial(NomeArq);
 
     // conta quantas palavras tem no arquivo selecionado
@@ -74,12 +77,12 @@ int MenuIncial(char NomeArq[])
         printf("Qual opcao: "); //pergunta a opcao do jogador
         scanf("%d", &opcao); //le qual foi a opcao do jogador e armazena em opcao
 
-        //verificacao para ver se a opcao escolida esta entre 1 e 5
+        //verificacao para ver se a opcao escolhida esta entre 1 e 5
         if (opcao < 1 || opcao > 5)
         {
             printf("\n\n       Opcao invalida tente novamente =3\n");
         }
-    } while (opcao < 1 || opcao > 5); //continua pedido ate que a opcao seja valida
+    } while (opcao < 1 || opcao > 5); //continua pedindo ate que a opcao seja valida
 
 
     //condicao para cada opcao valida que o jogador fizer
@@ -129,7 +132,7 @@ void BuscarPalavra(char NomeArquivo[], int faixa, char Spalavra[MAX_PALAVRA])
     //loop para percorrer o arquivo ate a linha da palavra sorteada
     for (int i = 0; i <= sorteiaPalavra(faixa); i++)
     {
-        //le a linha do arquivo e armazena em Spalavra
+        //le a linha do arquivo e a armazena em Spalavra
         fscanf(fListas, "%[^\n]\n", Spalavra);
     }
 
@@ -159,7 +162,7 @@ int qntPalavras(char NomeArquivo[])
         exit(1); //encerra o programa
     }
 
-    //le cada linha do arquivo e conta quatas existem
+    //le cada linha do arquivo e conta quantas existem
     while (fscanf(fListas, "%[^\n]\n", temp) != EOF)
     {
         qnt++; //incrementa ao contador cada linha lida
@@ -275,6 +278,20 @@ void DesenhaForca(int contador)
     }
 }
 
+void DpalavraSec(char Spalavra[], int l)
+{
+    char palavra[l+1]; //string para armazenar a palavra que esta sendo formada pelo jogador, contando com o '\0'
+    printf("\nDigite a palavra: \n"); //printa a mensagem
+    scanf("%s", palavra); //escaneia a palavra digitada pelo jogador
+
+    //condicao para verificar se o jogador acertou a palavra toda
+   if(strncmp(palavra, Spalavra, l-1) == 0)
+   {
+     MensagemVitoria(); //se sim exibe mensagem
+   } else printf("\nVocê perdeu! A palavra era: %s\n", Spalavra); //caso erre
+}
+
+
 int ExecutaJogo(char Spalavra[])
 {
     //declaracao de variaveis
@@ -298,7 +315,7 @@ int ExecutaJogo(char Spalavra[])
         {
             Pdigitada[i] = '\n';    //e se tiver quebra de linha eh para manter a quebra de linha
         }
-        else  //caso contrario substituir por espaco
+        else  //caso contrario substituir por underline
             Pdigitada[i] = '_';
     }
     Pdigitada[l - 1] = '\0'; //para finalizar a string corretamente
@@ -314,26 +331,39 @@ int ExecutaJogo(char Spalavra[])
         //inicilizacao das variaveis dentro do loop
         int enct = 0; //verifica se a letra foi encontrada
         int rept = 0; //verifica se a letra for repetida
+        int palav = 0;
 
-        //printa as letras ja digitadas
+        //printa a mensagem das letras ja digitadas
         printf("\nLetras digitadas: ");
 
-        //loop para as letras ja digitadas
+        //loop para printar as letras ja digitadas
         for (i = 0; i < qntDig; i++)
         {
             printf("%c ", Ldigitadas[i]); //imprime as letras ja digitadas que estao armazenadas na string de acordo com a sua posicao
         }
-
+        
+        //condicao para dar a oportunidade de digitar a palavra ou uma letra
+        if(erros == 5)
+        {
+            char op; //variavel para armazenar opcao
+            printf("\nVoce quer chutar a palavra ou digitar uma letra?\nSe for palavra digite p se for letra digite l: ");
+            scanf(" %c", &op); //escaneia a opcao
+            if(op == 'p') //condicao para verificar se o jogador deseja digitar a palavra
+            {
+                DpalavraSec(Spalavra, l); 
+                return 0; //encerra o jogo
+            }
+        }
         //printa para o jogador digitar uma letra
         printf("\nDigite uma letra: ");
-        scanf(" %c", &letra); //le a letra digitada e armazena em leta
+        scanf(" %c", &letra); //le a letra digitada e armazena em letra
 
         //loop para verificar se a letra ja foi digitada antes
         for (i = 0; i < qntDig; i++) 
         {
             if (Ldigitadas[i] == letra) 
             {
-                rept = 1; //define se a letra ja foi digitada
+                rept = 1; //define que a letra ja foi digitada
                 break;
             }
         }
@@ -370,10 +400,10 @@ int ExecutaJogo(char Spalavra[])
         //atualiza as chances restantes
         VerificaChances(erros + 1);
 
-        if (strncmp(Pdigitada, Spalavra, l - 1) == 0) //verifica se o jogador a palavra toda
+        if (strncmp(Pdigitada, Spalavra, l - 1) == 0) //verifica se o jogador acertou a palavra toda
         {
             MensagemVitoria(); //se sim eh exibida a mensagem de vitoria 
-            return 1; //retorna 1 para indicar que o jogador venceu
+            return 1;
         }
     }
     //se o loop terminar, significa que o joador perdeu e eh mostrada a palavra secreta
